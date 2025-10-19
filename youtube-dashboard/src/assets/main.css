@@ -5,3 +5,29 @@ html, body {
   font-family: 'Roboto', Arial, sans-serif;
   line-height: 1.4;
 }
+
+:root {
+  --header-bg: #ffffff;
+  --text-color: #0f0f0f;
+  --border-color: #d3d3d3;
+  --input-bg: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --bg-color: #e1dcdc;
+  --like-bg: #ffffff;
+}
+
+[data-theme='dark'] {
+  --header-bg: #1e1e1e;
+  --text-color: #f1f1f1;
+  --border-color: #444;
+  --input-bg: #2a2a2a;
+  --shadow-color: rgba(255, 255, 255, 0.05);
+  --bg-color: #121212;
+  --like-bg: #8e8a8a;
+}
+
+html, body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}

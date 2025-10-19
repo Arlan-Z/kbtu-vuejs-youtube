@@ -69,14 +69,17 @@ function toggleLike(): void {
   border-radius: 14px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.3s, color 0.3s;
   font-family: 'Roboto', Arial, sans-serif;
   position: relative;
+  background-color: var(--header-bg);
+  color: var(--text-color);
+  box-shadow: 0 2px 6px var(--shadow-color);
 }
 
 .video-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 20px var(--shadow-color);
 }
 
 .thumbnail-container {
@@ -120,7 +123,7 @@ function toggleLike(): void {
 .video-title {
   font-size: 15px;
   font-weight: 500;
-  color: #0f0f0f;
+  color: var(--text-color);
   line-height: 1.4;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -129,26 +132,30 @@ function toggleLike(): void {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   margin: 0; 
+  transition: color 0.3s;
 }
 
 .video-title:hover {
-  color: #030303;
+  color: var(--text-color);
+  opacity: 0.85;
 }
 
 .channel-name {
   font-size: 14px;
-  color: #606060;
-  transition: color 0.2s;
+  color: var(--text-color);
+  opacity: 0.7;
+  transition: color 0.3s, opacity 0.3s;
   margin: 0; 
 }
 
 .channel-name:hover {
-  color: #000;
+  opacity: 1;
 }
 
 .views {
   font-size: 13px;
-  color: #606060;
+  color: var(--text-color);
+  opacity: 0.7;
   margin: 0 0 10px 0; 
 }
 
@@ -156,16 +163,17 @@ function toggleLike(): void {
   position: absolute;
   right: 8px;
   top: 8px;
-  background: white;
-  border: 1px solid #ddd;
+  background: var(--like-bg);
+  border: 1px solid var(--border-color);
   border-radius: 50%;
   width: 38px;
   height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.25s ease, transform 0.2s ease;
+  transition: background 0.25s ease, transform 0.2s ease, border-color 0.3s;
   cursor: pointer;
+  box-shadow: 0 2px 4px var(--shadow-color);
 }
 
 .like-btn:hover {
@@ -173,9 +181,18 @@ function toggleLike(): void {
   transform: scale(1.05);
 }
 
+[data-theme='dark'] .like-btn:hover {
+  background: #3a1a1a;
+}
+
 .like-btn.active {
   background: #ffe5e5;
   border-color: #ff0000;
+}
+
+[data-theme='dark'] .like-btn.active {
+  background: #814b4b;
+  border-color: #ff4b4b;
 }
 
 .like-icon {

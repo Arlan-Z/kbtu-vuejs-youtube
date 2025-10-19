@@ -47,17 +47,13 @@ function handleLike(isLiked: boolean) {
 </template>
 
 <style scoped>
-body {
-  font-family: 'Roboto', Arial, sans-serif;
-  background-color: #f9f9f9;
-  margin: 0;
-  color: #0f0f0f;
-}
-
 #dashboard {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .content {
@@ -73,11 +69,14 @@ body {
   padding: 10px 18px;
   margin-bottom: 18px;
   font-size: 16px;
+  background-color: var(--header-bg);
+  box-shadow: 0 2px 6px var(--shadow-color);
+  transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .likes-label {
   font-weight: 500;
-  color: #333;
+  color: var(--text-color);
   margin-right: 6px;
 }
 
@@ -96,7 +95,9 @@ body {
 .message {
   text-align: center;
   font-size: 1.2em;
-  color: #777;
+  color: var(--text-color);
+  opacity: 0.7;
   margin-top: 50px;
+  transition: color 0.3s;
 }
 </style>

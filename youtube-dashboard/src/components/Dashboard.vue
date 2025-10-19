@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import Header from '@/components/Header.vue';
 import VideoItem from '@/components/VideoItem.vue';
-import YoutubeLogo from '@/assets/youtube.png';
 import { useVideos } from '@/composables/useVideos';
 
 const { searchQuery, loading, filteredVideos } = useVideos();
@@ -8,25 +8,7 @@ const { searchQuery, loading, filteredVideos } = useVideos();
 
 <template>
   <div id="dashboard">
-    <header class="header">
-      <div class="logo-section">
-        <img
-          :src="YoutubeLogo"
-          alt="YouTube logo"
-          class="logo"
-        />
-        <h1>Dashboard</h1>
-      </div>
-
-      <div class="search-bar">
-        <input
-          type="text"
-          v-model="searchQuery"
-          placeholder="Search"
-          class="search-input"
-        />
-      </div>
-    </header>
+    <Header v-model:searchQuery="searchQuery" />
 
     <main class="content">
       <div v-if="loading" class="message">
@@ -65,76 +47,6 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: white;
-  padding: 10px 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.logo-section {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.logo {
-  height: 32px;
-}
-
-.logo-section h1 {
-  font-size: 18px;
-  font-weight: 500;
-  color: #0f0f0f;
-  margin: 0;
-}
-
-.search-bar {
-  display: flex;
-  align-items: center;
-  width: 40%;
-  max-width: 600px;
-}
-
-.search-input {
-  flex: 1;
-  padding: 8px 12px;
-  border: 1px solid #d3d3d3;
-  border-radius: 20px;
-  font-size: 14px;
-  outline: none;
-}
-
-.search-btn {
-  background-color: #f8f8f8;
-  border: 1px solid #d3d3d3;
-  border-left: none;
-  border-radius: 0 20px 20px 0;
-  padding: 7px 14px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.search-btn:hover {
-  background-color: #e6e6e6;
-}
-
-.profile-section {
-  display: flex;
-  align-items: center;
-}
-
-.profile-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
 }
 
 .content {

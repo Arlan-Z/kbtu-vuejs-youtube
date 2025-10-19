@@ -3,14 +3,28 @@ import Header from '@/components/Header.vue';
 import VideoItem from '@/components/VideoItem.vue';
 import { useVideos } from '@/composables/useVideos';
 import Loading from './partials/Loading.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const { searchQuery, loading, filteredVideos } = useVideos();
 const totalLikes = ref(0);
+const sortOrder = ref<'asc' | 'desc' | null>(null); 
 
 function handleLike(isLiked: boolean) {
   totalLikes.value += isLiked ? 1 : -1; 
 }
+
+function toggleSort() {
+  if (sortOrder.value === null) sortOrder.value = 'desc';
+  else if (sortOrder.value === 'desc') sortOrder.value = 'asc';
+  else sortOrder.value = null;
+}
+
+const sortedVideos = computed(() => {
+  if (sortOrder.value === null) return filteredVideos.value;
+  return [...filteredVideos.value].sort((a, b) => 
+    sortOrder.value === 'desc' ? b.views - a.views : a.views - b.views
+  );
+});
 </script>
 
 <template>
@@ -21,18 +35,32 @@ function handleLike(isLiked: boolean) {
       <Loading v-if="loading" />
 
       <div v-else>
-        <div class="stats-bar">
-          <span class="likes-label">❤️ Total Likes:</span>
-          <span class="likes-count">{{ totalLikes }}</span>
+        <div class="top-bar">
+          <div class="stats-bar">
+            <span class="likes-label">❤️ Total Likes:</span>
+            <span class="likes-count">{{ totalLikes }}</span>
+          </div>
+
+          <button class="sort-btn" @click="toggleSort">
+            <template v-if="sortOrder === null">
+              🔄 No Sorting
+            </template>
+            <template v-else-if="sortOrder === 'desc'">
+              ⬇️ Sort: High → Low
+            </template>
+            <template v-else>
+              ⬆️ Sort: Low → High
+            </template>
+          </button>
         </div>
 
-        <div v-if="filteredVideos.length === 0" class="message">
+        <div v-if="sortedVideos.length === 0" class="message">
           No videos found.
         </div>
 
         <div v-else class="video-grid">
           <VideoItem
-            v-for="video in filteredVideos"
+            v-for="video in sortedVideos"
             :key="video.id"
             :title="video.title"
             :channel="video.channel"
@@ -61,13 +89,18 @@ function handleLike(isLiked: boolean) {
   padding: 24px 36px;
 }
 
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
 .stats-bar {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   border-radius: 12px;
   padding: 10px 18px;
-  margin-bottom: 18px;
   font-size: 16px;
   background-color: var(--header-bg);
   box-shadow: 0 2px 6px var(--shadow-color);
@@ -83,6 +116,27 @@ function handleLike(isLiked: boolean) {
 .likes-count {
   font-weight: bold;
   color: #e60023;
+}
+
+.sort-btn {
+  background: var(--header-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 5px var(--shadow-color);
+}
+
+.sort-btn:hover {
+  background: var(--input-bg);
+  transform: translateY(-2px);
+}
+
+.sort-btn:active {
+  transform: scale(0.97);
 }
 
 .video-grid {

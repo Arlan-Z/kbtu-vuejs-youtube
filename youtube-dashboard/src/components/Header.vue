@@ -1,16 +1,6 @@
 <script setup lang="ts">
 import YoutubeLogo from '@/assets/youtube.png';
-
-defineProps<{
-  searchQuery: string;
-}>();
-
-const emit = defineEmits(['update:searchQuery']);
-
-function handleInput(event: Event) {
-  const target = event.target as HTMLInputElement;
-  if (target) emit('update:searchQuery', target.value);
-}
+const searchQuery = defineModel<string>('searchQuery'); 
 </script>
 
 <template>
@@ -23,8 +13,7 @@ function handleInput(event: Event) {
     <div class="search-bar">
       <input
         type="text"
-        :value="searchQuery"
-        @input="handleInput"
+        v-model="searchQuery"
         placeholder="Search"
         class="search-input"
       />

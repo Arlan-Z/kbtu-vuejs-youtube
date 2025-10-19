@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import ProfileIcon from '@/assets/profile.png';
+import LikeFilled from '@/assets/like-filled.png';
+import LikeEmpty from '@/assets/like-empty.png';
+import { ref } from 'vue';
 
 defineProps<{
   title: string;
@@ -7,6 +10,12 @@ defineProps<{
   views: number;
   thumbnail: string;
 }>();
+
+const emit = defineEmits<{
+  (e: 'liked', value: boolean): void;
+}>();
+
+const liked = ref(false);
 
 function formatViews(num: number): string {
   if (num >= 1_000_000_000) {
@@ -19,6 +28,11 @@ function formatViews(num: number): string {
     return (num / 1_000).toFixed(1).replace(/\.0$/, '') + 'K';
   }
   return num.toString();
+}
+
+function toggleLike(): void {
+  liked.value = !liked.value;
+  emit('liked', liked.value);
 }
 </script>
 
@@ -36,6 +50,14 @@ function formatViews(num: number): string {
         <span class="views">{{ formatViews(views) }} views</span>
       </div>
     </div>
+
+    <button class="like-btn" :class="{ active: liked }" @click.stop="toggleLike">
+      <img
+        :src="liked ? LikeFilled : LikeEmpty"
+        alt="Like icon"
+        class="like-icon"
+      />
+    </button>
   </div>
 </template>
 
@@ -49,6 +71,7 @@ function formatViews(num: number): string {
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   font-family: 'Roboto', Arial, sans-serif;
+  position: relative;
 }
 
 .video-card:hover {
@@ -127,5 +150,41 @@ function formatViews(num: number): string {
   font-size: 13px;
   color: #606060;
   margin: 0 0 10px 0; 
+}
+
+.like-btn {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.like-btn:hover {
+  background: #ffefef;
+  transform: scale(1.05);
+}
+
+.like-btn.active {
+  background: #ffe5e5;
+  border-color: #ff0000;
+}
+
+.like-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+.like-btn.active .like-icon {
+  transform: scale(1.1);
 }
 </style>

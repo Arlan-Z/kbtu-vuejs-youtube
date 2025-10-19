@@ -3,8 +3,14 @@ import Header from '@/components/Header.vue';
 import VideoItem from '@/components/VideoItem.vue';
 import { useVideos } from '@/composables/useVideos';
 import Loading from './partials/Loading.vue';
+import { ref } from 'vue';
 
 const { searchQuery, loading, filteredVideos } = useVideos();
+const totalLikes = ref(0);
+
+function handleLike(isLiked: boolean) {
+  totalLikes.value += isLiked ? 1 : -1; 
+}
 </script>
 
 <template>
@@ -12,9 +18,14 @@ const { searchQuery, loading, filteredVideos } = useVideos();
     <Header v-model:searchQuery="searchQuery" />
 
     <main class="content">
-        <Loading v-if="loading" />
+      <Loading v-if="loading" />
 
       <div v-else>
+        <div class="stats-bar">
+          <span class="likes-label">❤️ Total Likes:</span>
+          <span class="likes-count">{{ totalLikes }}</span>
+        </div>
+
         <div v-if="filteredVideos.length === 0" class="message">
           No videos found.
         </div>
@@ -27,6 +38,7 @@ const { searchQuery, loading, filteredVideos } = useVideos();
             :channel="video.channel"
             :views="video.views"
             :thumbnail="video.thumbnail"
+            @liked="handleLike"
           />
         </div>
       </div>
@@ -51,6 +63,27 @@ body {
 .content {
   flex: 1;
   padding: 24px 36px;
+}
+
+.stats-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-radius: 12px;
+  padding: 10px 18px;
+  margin-bottom: 18px;
+  font-size: 16px;
+}
+
+.likes-label {
+  font-weight: 500;
+  color: #333;
+  margin-right: 6px;
+}
+
+.likes-count {
+  font-weight: bold;
+  color: #e60023;
 }
 
 .video-grid {

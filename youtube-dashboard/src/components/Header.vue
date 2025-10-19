@@ -57,7 +57,7 @@ function handleInput(event: Event) {
 
 .logo-section h1 {
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 900;
   color: #0f0f0f;
   margin: 0;
 }

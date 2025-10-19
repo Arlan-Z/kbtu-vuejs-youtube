@@ -2,6 +2,7 @@
 import Header from '@/components/Header.vue';
 import VideoItem from '@/components/VideoItem.vue';
 import { useVideos } from '@/composables/useVideos';
+import Loading from './partials/Loading.vue';
 
 const { searchQuery, loading, filteredVideos } = useVideos();
 </script>
@@ -11,9 +12,7 @@ const { searchQuery, loading, filteredVideos } = useVideos();
     <Header v-model:searchQuery="searchQuery" />
 
     <main class="content">
-      <div v-if="loading" class="message">
-        Loading videos...
-      </div>
+        <Loading v-if="loading" />
 
       <div v-else>
         <div v-if="filteredVideos.length === 0" class="message">

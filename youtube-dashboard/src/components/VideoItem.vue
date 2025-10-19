@@ -76,13 +76,13 @@ function formatViews(num: number): string {
 .video-info {
   display: flex;
   margin-top: 12px;
-  padding: 0 6px;
+  padding: 0 6px 0 0;
   gap: 12px;
 }
 
 .channel-avatar {
-  width: 38px;
-  height: 38px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   object-fit: cover;
   margin-top: 2px;

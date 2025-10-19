@@ -56,10 +56,11 @@ function handleInput(event: Event) {
 }
 
 .logo-section h1 {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 900;
   color: #0f0f0f;
   margin: 0;
+  letter-spacing: 0.2px;
 }
 
 .search-bar {

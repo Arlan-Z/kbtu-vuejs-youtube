@@ -1,5 +1,5 @@
 export default interface Video {
-  id: string;
+  id: number;
   title: string;
   channel: string;
   views: number;
